@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cut-Roll-AdminDashboard", "Cut-Roll-AdminDashboard", "{3C672100-8C40-4548-8BF4-615337095883}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{88E1E765-2F58-414D-A01D-C3A9F7C4095F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cut-Roll-AdminDashboard.Core", "Cut-Roll-AdminDashboard\src\Cut-Roll-AdminDashboard.Core\Cut-Roll-AdminDashboard.Core.csproj", "{DE22EDDB-DA12-47BA-AE7B-8CC537B88E85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cut-Roll-AdminDashboard.Infrastructure", "Cut-Roll-AdminDashboard\src\Cut-Roll-AdminDashboard.Infrastructure\Cut-Roll-AdminDashboard.Infrastructure.csproj", "{710DD4CC-1C90-4F3F-97D5-6A5CC1803DEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cut-Roll-AdminDashboard.Api", "Cut-Roll-AdminDashboard\src\Cut-Roll-AdminDashboard.Api\Cut-Roll-AdminDashboard.Api.csproj", "{BF59F076-1094-4CF8-AC54-D3894E5BE13B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE22EDDB-DA12-47BA-AE7B-8CC537B88E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE22EDDB-DA12-47BA-AE7B-8CC537B88E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE22EDDB-DA12-47BA-AE7B-8CC537B88E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE22EDDB-DA12-47BA-AE7B-8CC537B88E85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710DD4CC-1C90-4F3F-97D5-6A5CC1803DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710DD4CC-1C90-4F3F-97D5-6A5CC1803DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710DD4CC-1C90-4F3F-97D5-6A5CC1803DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710DD4CC-1C90-4F3F-97D5-6A5CC1803DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF59F076-1094-4CF8-AC54-D3894E5BE13B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF59F076-1094-4CF8-AC54-D3894E5BE13B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF59F076-1094-4CF8-AC54-D3894E5BE13B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF59F076-1094-4CF8-AC54-D3894E5BE13B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88E1E765-2F58-414D-A01D-C3A9F7C4095F} = {3C672100-8C40-4548-8BF4-615337095883}
+		{DE22EDDB-DA12-47BA-AE7B-8CC537B88E85} = {88E1E765-2F58-414D-A01D-C3A9F7C4095F}
+		{710DD4CC-1C90-4F3F-97D5-6A5CC1803DEB} = {88E1E765-2F58-414D-A01D-C3A9F7C4095F}
+		{BF59F076-1094-4CF8-AC54-D3894E5BE13B} = {88E1E765-2F58-414D-A01D-C3A9F7C4095F}
+	EndGlobalSection
+EndGlobal
