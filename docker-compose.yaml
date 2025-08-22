@@ -29,7 +29,7 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.admindashboard.rule=Host(cutnroll.it.com) && PathPrefix(/api/admindashboard)"
+      - "traefik.http.routers.admindashboard.rule=Host(`cutnroll.it.com`) && PathPrefix(`/api/admindashboard`)"
       - "traefik.http.routers.admindashboard.entrypoints=websecure"
       - "traefik.http.routers.admindashboard.tls.certresolver=myresolver"
       - "traefik.http.services.admindashboard.loadbalancer.server.port=80"
