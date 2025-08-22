@@ -9,13 +9,12 @@ namespace Cut_Roll_AdminDashboard.Core.Roles.Repositories;
 public interface IRoleRepository :
     IGetByIdAsync<string, RoleResponseDto?>,
     ICreateAsync<RoleCreateDto, string?>,
-    IDeleteByIdAsync<string, string?>,
-    IUpdateAsync<RoleUpdateDto, string?>
+    IDeleteByIdAsync<string, string?>
 {
     Task<RoleResponseDto?> GetByNameAsync(UserRoles role);
-    Task<PagedResult<RoleResponseDto>> GetAllRolesAsync(RolePaginationDto dto); 
+    Task<IEnumerable<RoleResponseDto>> GetAllRolesAsync(); 
     Task<int> SetupRolesAsync(); 
     Task<bool> RoleExistsAsync(UserRoles role);
-    Task<PagedResult<User>> GetUsersInRoleAsync(UserGetByRoleIdDto dto); 
+    Task<PagedResult<UserResponseDto>> GetUsersInRoleAsync(UserGetByRoleIdDto dto); 
     Task<int> CountUsersInRoleAsync(string roleId); 
 }

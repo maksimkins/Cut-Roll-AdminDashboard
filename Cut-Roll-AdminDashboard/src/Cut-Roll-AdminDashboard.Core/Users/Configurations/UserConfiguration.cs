@@ -12,7 +12,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder
             .Property(u => u.Id)
-            .ValueGeneratedNever(); 
+            .ValueGeneratedNever();
 
         builder.Property(u => u.IsBanned)
             .IsRequired();
@@ -29,5 +29,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
         builder.HasIndex(u => u.UserName)
             .IsUnique();
+            
+        builder.HasOne(u => u.Role)
+            .WithMany(r => r.Users)
+            .HasForeignKey(u => u.RoleId);
     }
 }

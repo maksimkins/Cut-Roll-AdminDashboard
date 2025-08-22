@@ -21,9 +21,9 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.HasIndex(u => u.Name)
             .IsUnique();
 
-        builder.HasMany(u => u.Users)
-            .WithOne()
-            .HasForeignKey(r => r.RoleId)
+        builder.HasMany(r => r.Users)
+            .WithOne(u => u.Role)          
+            .HasForeignKey(u => u.RoleId)  
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

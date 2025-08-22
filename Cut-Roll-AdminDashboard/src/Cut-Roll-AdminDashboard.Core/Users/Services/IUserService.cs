@@ -2,6 +2,7 @@ namespace Cut_Roll_AdminDashboard.Core.Users.Services;
 
 using Cut_Roll_AdminDashboard.Core.Common.Dtos;
 using Cut_Roll_AdminDashboard.Core.Users.Dtos;
+using Cut_Roll_AdminDashboard.Core.Users.Models;
 
 public interface IUserService
 {
@@ -15,6 +16,9 @@ public interface IUserService
     Task<PagedResult<UserResponseDto>> SearchUsersAsync(UserSearchDto? dto);
     Task<bool> UserExistsByUsernameAsync(string? username);
     Task<bool> UserExistsByEmailAsync(string? email);
-    Task<string?> ToggleBanUserAsync(string? userId);
-    Task<string?> ToggleMuteUserAsync(string? userId);
+    Task<string> ToggleBanUserAsync(string? userId);
+    Task<string> ToggleMuteUserAsync(string? userId);
+    Task<string> UpdateUserAvatarAsync(UserUpdateAvatarDto? dto);
+    Task<string> AssignRoleToUserAsync(UserRoleIdDto? dto);
+    Task<IQueryable<User>> GetUsersAsQueryableAsync();
 }

@@ -1,25 +1,38 @@
+using Cut_Roll_AdminDashboard.Api.Common.Extensions.ServiceCollection;
+using Cut_Roll_AdminDashboard.Api.Common.Extensions.WebApplication;
+using Cut_Roll_AdminDashboard.Api.Common.Extensions.WebApplicationBuilder;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.SetupVariables();
+builder.ConfigureMessageBroker();
 
+builder.Services.InitDbContext(builder.Configuration);
+builder.Services.InitAuth(builder.Configuration);
+builder.Services.InitSwagger();
+builder.Services.InitCors();
+
+builder.Services.RegisterDependencyInjection();
+
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+await app.UpdateDbAsync();
+await app.SetupRolesAsync();
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
+
+app.UseCors("AllowAllOrigins");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 app.Run();

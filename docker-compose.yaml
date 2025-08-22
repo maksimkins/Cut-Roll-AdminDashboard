@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  cut-roll-admindashboard:
+    image: makedoniaz/cut-roll-admindashboard:latest
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    container_name: admindashboard_container
+    environment:
+      ASPNETCORE_URLS: "http://+:80"
+      POSTGRES_CONNECTION_STRING: "Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};Database=${POSTGRES_DB};Pooling=true;"
+      JWT_KEY: "${JWT_KEY}"
+      JWT_LIFE_TIME_IN_MINUTES: "${JWT_LIFE_TIME_IN_MINUTES}"
+      JWT_ISSUER: "${JWT_ISSUER}"
+      JWT_AUDIENCE: "${JWT_AUDIENCE}"
+      RABBIT_MQ_HOSTNAME: "${RABBIT_MQ_HOSTNAME}"
+      RABBIT_MQ_USERNAME: "${RABBIT_MQ_USERNAME}"
+      RABBIT_MQ_PASSWORD: "${RABBIT_MQ_PASSWORD}"
+      ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT}"
+    expose:
+      - "80"
+    volumes:
+      - ./Data/SqlScripts:/app/SqlScripts
+    depends_on:
+      - postgres-admindashboard
+    networks:
+      - web
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.admindashboard.rule=Host(cutnroll.it.com) && PathPrefix(/api/admindashboard)"
+      - "traefik.http.routers.admindashboard.entrypoints=websecure"
+      - "traefik.http.routers.admindashboard.tls.certresolver=myresolver"
+      - "traefik.http.services.admindashboard.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.admindashboard-strip-prefix.stripprefix.prefixes=/api/admindashboard"
+      - "traefik.http.routers.admindashboard.middlewares=admindashboard-strip-prefix"
+
+  postgres-admindashboard:
+    image: postgres:latest
+    container_name: admindashboard_db_container
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:                
+      - "5346:${POSTGRES_PORT}"
+    networks:
+      - web
+    volumes:
+      - admindashboard_db_volume:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  admindashboard_db_volume:
+
+networks:
+  web:
+    external: true

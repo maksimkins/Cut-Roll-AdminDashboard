@@ -1,9 +1,11 @@
 
+using Cut_Roll_AdminDashboard.Core.Roles.Enums;
+
 namespace Cut_Roll_AdminDashboard.Core.Users.Dtos;
 public class UserSearchDto
 {
     public string? SearchTerm { get; set; }
-    public string? Role { get; set; }
+    public UserRoles? Role { get; set; }
     public bool? IsBanned { get; set; }
     public bool? IsMuted { get; set; }
     public DateTime? RegisteredAfter { get; set; }
