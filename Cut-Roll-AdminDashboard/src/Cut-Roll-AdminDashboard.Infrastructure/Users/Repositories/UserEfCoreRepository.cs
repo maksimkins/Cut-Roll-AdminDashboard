@@ -30,7 +30,7 @@ public class UserEfCoreRepository : IUserRepository
         return await _context.Users.CountAsync(u => u.RoleId == roleId);
     }
 
-    public Task<string?> CreateAsync(UserCreateDto entity)
+    public async Task<string?> CreateAsync(UserCreateDto entity)
     {
         _context.Users.Add(new User
         {
@@ -41,8 +41,8 @@ public class UserEfCoreRepository : IUserRepository
             RoleId = entity.RoleId
         });
 
-        var res = _context.SaveChangesAsync();
-        return res.ContinueWith(t => t.Result > 0 ? entity.Id : null);
+        var res = await _context.SaveChangesAsync();
+        return res > 0 ? entity.Id : null;
     }
 
     public async Task<string?> DeleteByIdAsync(string id)
@@ -116,7 +116,7 @@ public class UserEfCoreRepository : IUserRepository
 
     public async Task<PagedResult<UserResponseDto>> SearchUsersAsync(UserSearchDto dto)
     {
-        var query = _context.Users.AsQueryable();
+        var query = _context.Users.Include(u => u.Role).AsQueryable();
 
     
         if (!string.IsNullOrWhiteSpace(dto.SearchTerm))
