@@ -127,13 +127,22 @@ public class UserEfCoreRepository : IUserRepository
                 EF.Functions.ILike(u.Email, term));
         }
 
-        
         if (dto.Role.HasValue)
         {
-            query = query.Where(u => u.Role.Name == dto.Role.ToString());
+            var roleName = dto.Role.Value.ToString();
+
+
+            var roleId = await _context.Roles
+                .Where(r => r.Name == roleName)
+                .Select(r => r.Id)
+                .FirstOrDefaultAsync();
+
+            if (!string.IsNullOrWhiteSpace(roleId)) 
+            {
+                query = query.Where(u => u.RoleId == roleId);
+            }
         }
 
-        
         if (dto.IsBanned.HasValue)
         {
             query = query.Where(u => u.IsBanned == dto.IsBanned.Value);

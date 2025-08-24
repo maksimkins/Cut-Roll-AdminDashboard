@@ -44,41 +44,8 @@ public class AdminService : IAdminService
 
     public async Task<int> GetFilteredUserCountAsync(UserSearchDto dto)
     {
-        var query = await _userService.GetUsersAsQueryableAsync();
-    
-        if (!string.IsNullOrWhiteSpace(dto.SearchTerm))
-        {
-            query = query.Where(u =>
-                u.UserName.Contains(dto.SearchTerm) ||
-                u.Email.Contains(dto.SearchTerm));
-        }
-    
-        if (dto.Role.HasValue)
-        {
-            query = query.Where(u => u.RoleId == dto.Role.Value.ToString());
-        }
-    
-        if (dto.IsBanned.HasValue)
-        {
-            query = query.Where(u => u.IsBanned == dto.IsBanned.Value);
-        }
-    
-        if (dto.IsMuted.HasValue)
-        {
-            query = query.Where(u => u.IsMuted == dto.IsMuted.Value);
-        }
-    
-        if (dto.RegisteredAfter.HasValue)
-        {
-            query = query.Where(u => u.CreatedAt>= dto.RegisteredAfter.Value);
-        }
-    
-        if (dto.RegisteredBefore.HasValue)
-        {
-            query = query.Where(u => u.CreatedAt <= dto.RegisteredBefore.Value);
-        }
-    
-        return await query.CountAsync();
+        var pagedRes = await _userService.SearchUsersAsync(dto);
+        return pagedRes.TotalCount;
     }
 
     public async Task<string> GetRoleByEmailAsync(string email)
@@ -133,53 +100,7 @@ public class AdminService : IAdminService
 
     public async Task<PagedResult<UserResponseDto>> GetUsersFilteredAsync(UserSearchDto dto)
     {
-        var query = await _userService.GetUsersAsQueryableAsync();
-
-        if (!string.IsNullOrWhiteSpace(dto.SearchTerm))
-        {
-            query = query.Where(u =>
-                u.UserName.Contains(dto.SearchTerm) ||
-                u.Email.Contains(dto.SearchTerm));
-        }
-
-        if (dto.Role.HasValue)
-            query = query.Where(u => u.RoleId == dto.Role.Value.ToString());
-
-        if (dto.IsBanned.HasValue)
-            query = query.Where(u => u.IsBanned == dto.IsBanned.Value);
-
-        if (dto.IsMuted.HasValue)
-            query = query.Where(u => u.IsMuted == dto.IsMuted.Value);
-
-        if (dto.RegisteredAfter.HasValue)
-            query = query.Where(u => u.CreatedAt >= dto.RegisteredAfter.Value);
-
-        if (dto.RegisteredBefore.HasValue)
-            query = query.Where(u => u.CreatedAt <= dto.RegisteredBefore.Value);
-
-        var totalCount = await query.CountAsync();
-
-        var users = await query
-            .Skip((dto.PageNumber - 1) * dto.PageSize)
-            .Take(dto.PageSize).Select(u => new UserResponseDto
-            {
-                Id = u.Id,
-                Username = u.UserName,
-                Email = u.Email,
-                Role = u.Role.Name, 
-                IsBanned = u.IsBanned,
-                IsMuted = u.IsMuted,
-                CreatedAt = u.CreatedAt
-            })
-            .ToListAsync();
-
-        return new PagedResult<UserResponseDto>
-        {
-            Data = users,
-            TotalCount = totalCount,
-            Page = dto.PageNumber,
-            PageSize = dto.PageSize
-        };
+        return await _userService.SearchUsersAsync(dto);
     }
 
     public async Task<string> RemoveRoleFromUserAsync(UserRoleDto dto)
