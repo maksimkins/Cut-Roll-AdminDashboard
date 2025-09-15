@@ -182,7 +182,8 @@ public class UserEfCoreRepository : IUserRepository
                 Role = u.Role.Name,
                 IsBanned = u.IsBanned,
                 IsMuted = u.IsMuted,
-                CreatedAt = u.CreatedAt
+                CreatedAt = u.CreatedAt,
+                AvatarPath = u.AvatarPath
             })
             .ToListAsync();
 
